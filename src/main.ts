@@ -1,6 +1,8 @@
 import {
   App,
   Editor,
+  MarkdownFileInfo,
+  MarkdownPreviewRenderer,
   MarkdownView,
   Modal,
   Notice,
@@ -20,7 +22,7 @@ const DEFAULT_SETTINGS: MyPluginSettings = {
 }
 
 export default class MyPlugin extends Plugin {
-  settings: MyPluginSettings
+  settings: MyPluginSettings = DEFAULT_SETTINGS
 
   async onload() {
     await this.loadSettings()
@@ -29,7 +31,7 @@ export default class MyPlugin extends Plugin {
     const ribbonIconEl = this.addRibbonIcon(
       'dice',
       'Sample Plugin',
-      (mouse: MouseEvent) => {
+      (evt: MouseEvent) => {
         // Called when the user clicks the icon.
         new Notice('Hello world')
       },
@@ -53,7 +55,10 @@ export default class MyPlugin extends Plugin {
     this.addCommand({
       id: 'sample-editor-command',
       name: 'Sample editor command',
-      editorCallback: (editor: Editor, view: MarkdownView) => {
+      editorCallback: (
+        editor: Editor,
+        ctx: MarkdownView | MarkdownFileInfo,
+      ) => {
         console.log(editor.getSelection())
         editor.replaceSelection('Sample Editor Command')
       },
@@ -94,7 +99,7 @@ export default class MyPlugin extends Plugin {
     )
   }
 
-  onunload() { }
+  // onunload() { }
 
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
@@ -106,9 +111,9 @@ export default class MyPlugin extends Plugin {
 }
 
 class SampleModal extends Modal {
-  constructor(app: App) {
-    super(app)
-  }
+  // constructor(app: App) {
+  //   super(app)
+  // }
 
   onOpen() {
     const { contentEl } = this
