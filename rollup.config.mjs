@@ -21,7 +21,6 @@ export default {
     }),
     postcss({
       plugins: [autoprefixer()],
-      sourceMap: true,
       extract: 'styles.css',
       minimize: true,
     }),
