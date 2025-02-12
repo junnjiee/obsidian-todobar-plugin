@@ -1,0 +1,32 @@
+.todoItem {
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.todoItemBtnGroup {
+  display: flex;
+  margin-left: auto;
+  gap: 5px;
+}
+
+.tabs {
+  display: flex;
+}
+
+.tabItem {
+  padding: 5px 0;
+  text-align: center;
+  flex: 1;
+  cursor: pointer;
+}
+
+.tabItemActive {
+  color: var(--link-color);
+  border-bottom: 2px solid var(--link-color);
+}
+
+.iconBtn {
+  padding: 3px;
+  cursor: pointer;
+}
