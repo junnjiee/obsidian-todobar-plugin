@@ -1,8 +1,10 @@
 import typescript from '@rollup/plugin-typescript'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
+import autoprefixer from 'autoprefixer'
+import postcss from 'rollup-plugin-postcss'
 
-// TODO: toggle production build and minify code
+// TODO: create production build and minify code
 export default {
   input: 'src/main.ts',
   output: {
@@ -10,11 +12,18 @@ export default {
     format: 'cjs',
   },
   external: ['obsidian', 'React', 'ReactDOM'],
+  preserveModules: true,
   plugins: [
     typescript(),
     commonjs(),
     resolve({
       browser: true,
+    }),
+    postcss({
+      plugins: [autoprefixer()],
+      sourceMap: true,
+      extract: 'styles.css',
+      minimize: true,
     }),
   ],
 }

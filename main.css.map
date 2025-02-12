@@ -1,0 +1,1 @@
+{"version":3,"sources":["TodoList.module.css"],"names":[],"mappings":"AAAA,6BACE,0BACF","file":"main.css","sourcesContent":[".test {\n  color: var(--color-base-40);\n}\n"]}
