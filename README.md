@@ -1,1 +1,1 @@
-*I spent more time configuring the JavaScript environment than actual development.*
+Mini side-quest to figure out how to build a Obsidian plugin.
