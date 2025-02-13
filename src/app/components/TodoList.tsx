@@ -16,10 +16,6 @@ export function TodoList() {
   const [inCompletedTab, setInCompletedTab] = useState(false)
   const [editingWhichTodo, setEditingWhichTodo] = useState(-1)
 
-  const addNewTodo = (todo: string) => {
-    todoDispatch({ type: 'add', todo: todo })
-  }
-
   const editThisTodo = (id: number) => setEditingWhichTodo(id)
   const endEditingTodo = () => setEditingWhichTodo(-1)
 
@@ -59,7 +55,24 @@ export function TodoList() {
             )
           }
         })}
-        {!inCompletedTab && <NewTodoInput addNewTodo={addNewTodo} />}
+        {!inCompletedTab && (
+          <NewTodoInput
+            addNewTodo={(todo: string) =>
+              todoDispatch({ type: 'add', todo: todo })
+            }
+          />
+        )}
+        {inCompletedTab &&
+          (todoList.filter((todoItem) => todoItem.completed).length > 0 ? (
+            <button
+              onClick={() => todoDispatch({ type: 'removeCompleted' })}
+              aria-label="remove completed todos"
+            >
+              Clear
+            </button>
+          ) : (
+            <i>No completed tasks.</i>
+          ))}
       </div>
     </section>
   )
@@ -135,7 +148,7 @@ function TodoItem(props: TodoItemProps) {
             <div
               className={styles.iconBtn}
               onClick={removeTodo}
-              aria-label="delete todo"
+              aria-label="remove todo"
             >
               <TrashIcon size={14} />
             </div>

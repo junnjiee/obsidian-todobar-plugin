@@ -10,7 +10,7 @@ describe('Todo List', () => {
     expect(screen.getByPlaceholderText('To do:')).toBeInTheDocument()
   })
 
-  it('adds a todo item', async () => {
+  it('add a todo item', async () => {
     const user = userEvent.setup()
     render(<TodoList />)
     await user.type(screen.getByPlaceholderText('To do:'), 'this is a todo')
@@ -20,7 +20,7 @@ describe('Todo List', () => {
     expect(screen.getByRole('checkbox')).not.toBeChecked()
   })
 
-  it('adds multiple todo items', async () => {
+  it('add multiple todo items', async () => {
     const user = userEvent.setup()
     render(<TodoList />)
 
@@ -34,7 +34,7 @@ describe('Todo List', () => {
     expect(await screen.findAllByLabelText('todo item')).toHaveLength(3)
   })
 
-  it('adds an empty todo item', async () => {
+  it('add an empty todo item', async () => {
     const user = userEvent.setup()
     render(<TodoList />)
     await user.type(screen.getByPlaceholderText('To do:'), '   ')
@@ -50,10 +50,10 @@ describe('Todo List', () => {
     await user.click(screen.getByLabelText('add todo'))
 
     await user.click(screen.getByLabelText('edit todo'))
-    await user.type(screen.getByDisplayValue('this is a todo'), ' todo todo')
+    await user.type(screen.getByDisplayValue('this is a todo'), ' edited')
     await user.click(screen.getByLabelText('submit edited todo'))
 
-    expect(screen.getByText('this is a todo todo todo')).toBeInTheDocument()
+    expect(screen.getByText('this is a todo edited')).toBeInTheDocument()
   })
 
   it('submit an empty edit for a todo item', async () => {
@@ -69,13 +69,13 @@ describe('Todo List', () => {
     expect(screen.getByText('this is a todo')).toBeInTheDocument()
   })
 
-  it('delete a todo', async () => {
+  it('remove a todo', async () => {
     const user = userEvent.setup()
     render(<TodoList />)
     await user.type(screen.getByPlaceholderText('To do:'), 'this is a todo')
     await user.click(screen.getByLabelText('add todo'))
 
-    await user.click(screen.getByLabelText('delete todo'))
+    await user.click(screen.getByLabelText('remove todo'))
     expect(screen.queryByText('this is a todo')).toBeNull()
   })
 
@@ -89,5 +89,23 @@ describe('Todo List', () => {
     await user.click(screen.getByText('Completed'))
     expect(screen.getByText('this is a todo')).toBeInTheDocument()
     expect(screen.getByRole('checkbox')).toBeChecked()
+  })
+
+  it('clear completed todos', async () => {
+    const user = userEvent.setup()
+    render(<TodoList />)
+    await user.type(screen.getByPlaceholderText('To do:'), 'first todo')
+    await user.click(screen.getByLabelText('add todo'))
+    await user.type(screen.getByPlaceholderText('To do:'), 'second todo')
+    await user.click(screen.getByLabelText('add todo'))
+
+    const checkboxes = screen.getAllByRole('checkbox')
+    checkboxes.forEach((checkbox) => {
+      user.click(checkbox)
+    })
+
+    await user.click(screen.getByText('Completed'))
+    await user.click(screen.getByText('Clear'))
+    expect(screen.getByText('No completed tasks.')).toBeInTheDocument()
   })
 })
