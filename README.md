@@ -1,1 +1,1 @@
-Mini side-quest to figure out how to build a Obsidian plugin.
+Side-quest to figure out how to build a Obsidian plugin.
