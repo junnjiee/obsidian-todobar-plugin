@@ -1,5 +1,10 @@
+.todoList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
 .todoItem {
-  padding: 5px 0;
   display: flex;
   align-items: center;
 }
@@ -12,6 +17,7 @@
 
 .tabs {
   display: flex;
+  margin-bottom: 10px;
 }
 
 .tabItem {
@@ -29,4 +35,8 @@
 .iconBtn {
   padding: 3px;
   cursor: pointer;
+}
+
+.input {
+  padding: 2px 7px;
 }
