@@ -1,1 +1,1 @@
-This was for fun.
+Experimenting with making an Obsidian plugin
